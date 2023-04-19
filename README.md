@@ -1,3 +1,3 @@
-# medimate
+# Coming Soon
 
-A new Flutter project.
+Mini Project fo Flutter Class
