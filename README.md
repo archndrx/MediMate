@@ -1,3 +1,3 @@
 # Coming Soon
 
-Mini Project fo Flutter Class
+Mini Project for Flutter Class
