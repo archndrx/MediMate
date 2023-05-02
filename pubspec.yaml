@@ -24,19 +24,17 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-assets:
-  - assets/images/
-
-fonts:
-  - family: Popins
-    fonts:
-      - asset: assets/fonts/popins_regular.ttf
-      - asset: assets/fonts/popins_light.ttf
-        weight: 300
-      - asset: assets/fonts/popins_bold.ttf
-        weight: 700
-      - asset: assets/fonts/popins_semibold.ttf
-        weight: 600
-      - asset: assets/fonts/popins_medium.ttf
-        weight: 500
+  assets:
+    - assets/images/
+  fonts:
+    - family: Popins
+      fonts:
+        - asset: assets/fonts/popins_regular.ttf
+        - asset: assets/fonts/popins_light.ttf
+          weight: 300
+        - asset: assets/fonts/popins_bold.ttf
+          weight: 700
+        - asset: assets/fonts/popins_semibold.ttf
+          weight: 600
+        - asset: assets/fonts/popins_medium.ttf
+          weight: 500
