@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:medimate/view/screen/add_new_medicine/add_new_medicine.dart';
+import 'package:medimate/view/screen/home/homepage.dart';
 import 'package:medimate/view/screen/welcome_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,8 +35,8 @@ class MainApp extends StatelessWidget {
       ),
       routes: {
         "/": (context) => WelcomePage(),
-        // "/home": (context) => Home(),
-        // "/add_new_medicine": (context) => AddNewMedicine(),
+        "/home": (context) => HomePage(),
+        "/add_new_medicine": (context) => AddNewMedicine(),
       },
       initialRoute: "/",
     );
