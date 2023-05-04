@@ -12,7 +12,7 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: deviceHeight * 0.04,
+              height: deviceHeight * 0.1,
             ),
             Image.asset('assets/images/welcome_image.png',
                 width: double.infinity, height: deviceHeight * 0.4),
@@ -22,11 +22,11 @@ class WelcomePage extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  height: deviceHeight * 0.15,
+                  height: deviceHeight * 0.1,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                     child: AutoSizeText(
-                      "Be in control of your meds",
+                      "MediMate",
                       style: Theme.of(context)
                           .textTheme
                           .displayLarge
@@ -63,9 +63,8 @@ class WelcomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 35.0, right: 35.0),
                 child: ElevatedButton(
-                  onPressed: () {},
-                  // onPressed: () =>
-                  //     Navigator.pushReplacementNamed(context, "/home"),
+                  onPressed: () =>
+                      Navigator.pushReplacementNamed(context, "/home"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
