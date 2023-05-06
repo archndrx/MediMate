@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final double deviceHeight =
-        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final double deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: SafeArea(
