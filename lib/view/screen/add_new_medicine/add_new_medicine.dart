@@ -255,6 +255,14 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
             ),
           );
           return;
+        }
+        if (amountController.text.isEmpty || nameController.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Form Field can't be empty"),
+            ),
+          );
+          return;
         } else {
           //set the notification schneudele
           tz.initializeTimeZones();
