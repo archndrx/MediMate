@@ -60,7 +60,6 @@ class FormFields extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             borderSide:
                                 BorderSide(width: 0.5, color: Colors.grey))),
-                    onSubmitted: (val) => focus.unfocus(),
                   ),
                 ),
               ),
@@ -70,17 +69,18 @@ class FormFields extends StatelessWidget {
               Flexible(
                 flex: 1,
                 child: Container(
-                  height: constrains.maxHeight * 0.22,
+                  height: constrains.maxHeight * 0.23,
                   child: DropdownButtonFormField(
                     onTap: () => focus.unfocus(),
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
-                        labelText: "Type",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide:
-                                BorderSide(width: 0.5, color: Colors.grey))),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 20.0),
+                      labelText: "Type",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                      ),
+                    ),
                     items: weightValues
                         .map((weight) => DropdownMenuItem(
                               child: Text(weight),

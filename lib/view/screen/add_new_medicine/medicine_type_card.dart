@@ -11,19 +11,19 @@ class MedicineTypeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<MedicineProvider>(context);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+    return Column(
       children: [
         InkWell(
           onTap: () => provider.medicineTypeClick(pillType),
           child: Container(
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               color: pillType.isChoose
                   ? Color.fromRGBO(7, 190, 200, 1)
-                  : Colors.white,
+                  : Color.fromARGB(255, 234, 233, 233),
             ),
-            width: 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -35,20 +35,18 @@ class MedicineTypeCard extends StatelessWidget {
                   height: 7.0,
                 ),
                 Container(
-                    child: Text(
-                  pillType.name,
-                  style: TextStyle(
-                    color: pillType.isChoose ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.w500,
+                  child: Text(
+                    pillType.name,
+                    style: TextStyle(
+                      color: pillType.isChoose ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                )),
+                ),
               ],
             ),
           ),
         ),
-        SizedBox(
-          width: 15.0,
-        )
       ],
     );
   }

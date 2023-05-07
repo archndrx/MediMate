@@ -90,7 +90,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
               ),
               Consumer<MedicineProvider>(
                 builder: (context, medicProvider, child) => Container(
-                  height: deviceHeight * 0.3,
+                  height: deviceHeight * 0.37,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: FormFields(
@@ -121,9 +121,8 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
               ),
               Container(
                 height: 100,
-                child: ListView(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ...provider.medicineTypes
                         .map((type) => MedicineTypeCard(type))
