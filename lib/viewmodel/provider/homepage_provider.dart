@@ -7,14 +7,22 @@ import 'package:medimate/model/pill.dart';
 import 'package:medimate/model/services/notifications/notifications.dart';
 
 class HomePageProvider extends ChangeNotifier {
+  // notifications
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   final Notifications _notifications = Notifications();
+  Future initNotifies() async =>
+      flutterLocalNotificationsPlugin = await _notifications.initNotif();
+
+  // list pill from database
   final Repository _repository = Repository();
   List<Pill> allListOfPills = [];
   List<Pill> dailyPills = [];
+
+  // calendar days
   List<CalendarDayModel> _daysList = [];
   int _lastChooseDay = 0;
 
+// getter
   List<CalendarDayModel> get daysList => _daysList;
 
   void init() {
@@ -23,9 +31,7 @@ class HomePageProvider extends ChangeNotifier {
     _daysList = CalendarDayModel().getCurrentDays();
   }
 
-  Future initNotifies() async =>
-      flutterLocalNotificationsPlugin = await _notifications.initNotif();
-
+//--------------------GET DATA FROM DATABASE---------------------
   Future setData() async {
     allListOfPills.clear();
     (await _repository.getAllData("Pills"))?.forEach(
@@ -38,6 +44,7 @@ class HomePageProvider extends ChangeNotifier {
     chooseDay(_daysList[_lastChooseDay]);
   }
 
+  //-------------------------| Click on calendar day |-------------------------
   void chooseDay(CalendarDayModel clickedDay) {
     _lastChooseDay = _daysList.indexOf(clickedDay);
     _daysList.forEach((day) => day.isChecked = false);

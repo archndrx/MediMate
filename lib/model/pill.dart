@@ -32,8 +32,6 @@ class Pill {
     return map;
   }
 
-  //=====================================================
-
   //---------------------create pill object from map---------------------
   Pill pillMapToObject(Map<String, dynamic> pillMap) {
     return Pill(
@@ -46,9 +44,8 @@ class Pill {
       notifyId: pillMap['notifyId'],
     );
   }
-//=====================================================================
 
-  //---------------------| Get the medicine image path |-------------------------
+  //---------------------| Get  medicine image path |-------------------------
   String get image {
     switch (this.medicineForm) {
       case "Syrup":
@@ -65,6 +62,4 @@ class Pill {
         break;
     }
   }
-
-  //=============================================================================
 }

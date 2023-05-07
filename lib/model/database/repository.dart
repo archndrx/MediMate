@@ -11,6 +11,7 @@ class Repository {
     return _database;
   }
 
+  //init table db
   final String _tableName = 'pills';
   Future<Database> _initializeDb() async {
     var db = await openDatabase(

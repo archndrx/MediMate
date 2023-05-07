@@ -11,38 +11,44 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class MedicineProvider extends ChangeNotifier {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-
+  // notifications
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   final Notifications _notifications = Notifications();
   Future initNotifies() async =>
       flutterLocalNotificationsPlugin = await _notifications.initNotif();
 
+  // database
   final Repository _repository = Repository();
 
+  // pill objects
   int howManyWeeks = 1;
   DateTime setDate = DateTime.now();
-
-  final List<String> weightValues = ["pills", "ml", "mg"];
   String selectWeight;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+
+  //medicineType weight
+  final List<String> weightValues = ["pills", "ml", "mg"];
 
   void init() {
     initNotifies();
     selectWeight = weightValues[0];
   }
 
+  // list medicine object
   final List<MedicineType> _medicineTypes = [
     MedicineType("Syrup", Image.asset("assets/images/syrup.png"), true),
     MedicineType("Pill", Image.asset("assets/images/pills.png"), false),
     MedicineType("Capsule", Image.asset("assets/images/capsule.png"), false),
   ];
 
+  // getter
   List<MedicineType> get medicineTypes => _medicineTypes;
   int get time =>
       setDate.millisecondsSinceEpoch -
       tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
 
+//------------------------OPEN TIME PICKER----------------------------
   Future<void> openTimePicker(BuildContext context) async {
     await showTimePicker(
             context: context,
@@ -62,6 +68,7 @@ class MedicineProvider extends ChangeNotifier {
     });
   }
 
+//-------------------------SHOW DATE PICKER-------------------------------
   Future<void> openDatePicker(BuildContext context) async {
     await showDatePicker(
             context: context,
@@ -83,17 +90,20 @@ class MedicineProvider extends ChangeNotifier {
     });
   }
 
+//----------------------------CLICK ON MEDICINE FORM CONTAINER----------------------------------------
   void medicineTypeClick(MedicineType medicine) {
     medicineTypes.forEach((medicineType) => medicineType.isChoose = false);
     medicineTypes[medicineTypes.indexOf(medicine)].isChoose = true;
     notifyListeners();
   }
 
+//--------------------------------------SET WEIGHT---------------------------------------
   void setSelectedWeight(String value) {
     selectWeight = value;
     notifyListeners();
   }
 
+//--------------------------------------SAVE PILL IN DB---------------------------------------
   Future savePill(BuildContext context) async {
     //check if medicine time is lower than actual time
     if (setDate.millisecondsSinceEpoch <=
