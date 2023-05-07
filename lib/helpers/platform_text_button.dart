@@ -11,21 +11,17 @@ class PlatfromTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(this.color),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(this.color),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
           ),
         ),
-        onPressed: this.handler,
-        child: this.buttonChild,
-      );
-    } else {
-      return Container();
-    }
+      ),
+      onPressed: this.handler,
+      child: this.buttonChild,
+    );
   }
 }
