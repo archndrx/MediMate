@@ -21,7 +21,7 @@ class MedicineProvider extends ChangeNotifier {
   final Repository _repository = Repository();
 
   // pill objects
-  int howManyWeeks = 1;
+  int dayNow = 1;
   DateTime setDate = DateTime.now();
   String selectWeight;
   final TextEditingController nameController = TextEditingController();
@@ -134,7 +134,7 @@ class MedicineProvider extends ChangeNotifier {
           notifyId: Random().nextInt(10000000));
 
       //---------------------| Save as many medicines as many user checks |----------------------
-      for (int i = 0; i < howManyWeeks; i++) {
+      for (int i = 0; i < dayNow; i++) {
         dynamic result = await _repository.insertData(pill.pillToMap());
         if (result == null) {
           ScaffoldMessenger.of(context).showSnackBar(

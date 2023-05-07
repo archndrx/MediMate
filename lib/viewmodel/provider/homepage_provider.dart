@@ -34,7 +34,7 @@ class HomePageProvider extends ChangeNotifier {
 //--------------------GET DATA FROM DATABASE---------------------
   Future setData() async {
     allListOfPills.clear();
-    (await _repository.getAllData("Pills"))?.forEach(
+    (await _repository.getAllData("Pills")).forEach(
       (pillMap) {
         allListOfPills.add(
           Pill().pillMapToObject(pillMap),

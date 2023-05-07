@@ -25,7 +25,7 @@ class Notifications {
   Future showNotification(String title, String desc, int time, int id,
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        id.toInt(),
+        id,
         title,
         desc,
         tz.TZDateTime.now(tz.local).add(
