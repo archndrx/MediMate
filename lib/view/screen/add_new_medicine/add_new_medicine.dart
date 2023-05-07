@@ -1,18 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:medimate/helpers/platform_text_button.dart';
-import 'package:medimate/model/database/repository.dart';
-import 'package:medimate/model/pill.dart';
 import 'package:medimate/view/screen/add_new_medicine/form_fields.dart';
 import 'package:medimate/view/screen/add_new_medicine/medicine_type_card.dart';
-import 'package:medimate/model/services/notifications/notifications.dart';
 import 'package:medimate/viewmodel/provider/medicine_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'package:timezone/data/latest.dart' as tz;
 
 class AddNewMedicine extends StatefulWidget {
   @override
@@ -20,28 +12,11 @@ class AddNewMedicine extends StatefulWidget {
 }
 
 class _AddNewMedicineState extends State<AddNewMedicine> {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-  //-------------Pill object------------------
-  int howManyWeeks = 1;
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-
-  //-------------- Database and notifications ------------------
-  final Repository _repository = Repository();
-  final Notifications _notifications = Notifications();
-
-  //============================================================
-
   @override
   void initState() {
     super.initState();
-    initNotifies();
+    Provider.of<MedicineProvider>(context, listen: false).init();
   }
-
-  //init notifications
-  Future initNotifies() async =>
-      flutterLocalNotificationsPlugin = await _notifications.initNotif();
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +71,8 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                     child: FormFields(
                         medicProvider.selectWeight,
                         (value) => medicProvider.setSelectedWeight(value),
-                        nameController,
-                        amountController),
+                        medicProvider.nameController,
+                        medicProvider.amountController),
                   ),
                 ),
               ),
@@ -203,7 +178,9 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                 height: deviceHeight * 0.09,
                 width: double.infinity,
                 child: PlatfromTextButton(
-                  handler: () async => savePill(),
+                  handler: () async =>
+                      Provider.of<MedicineProvider>(context, listen: false)
+                          .savePill(context),
                   color: Theme.of(context).primaryColor,
                   buttonChild: Text(
                     "Done",
@@ -219,70 +196,5 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
         ),
       ),
     );
-  }
-
-  //--------------------------------------SAVE PILL IN DATABASE---------------------------------------
-  Future savePill() async {
-    final provider = Provider.of<MedicineProvider>(context, listen: false);
-    //check if medicine time is lower than actual time
-    if (provider.setDate.millisecondsSinceEpoch <=
-        DateTime.now().millisecondsSinceEpoch) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Check your medicine time and date"),
-        ),
-      );
-    } else {
-      //create pill object
-      Pill pill = Pill(
-          amount: amountController.text,
-          medicineForm: provider
-              .medicineTypes[provider.medicineTypes
-                  .indexWhere((element) => element.isChoose == true)]
-              .name,
-          name: nameController.text,
-          time: provider.setDate.millisecondsSinceEpoch,
-          type: provider.selectWeight,
-          notifyId: Random().nextInt(10000000));
-
-      //---------------------| Save as many medicines as many user checks |----------------------
-      for (int i = 0; i < howManyWeeks; i++) {
-        dynamic result = await _repository.insertData(pill.pillToMap());
-        if (result == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Something went wrong"),
-            ),
-          );
-          return;
-        }
-        if (amountController.text.isEmpty || nameController.text.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Form Field can't be empty"),
-            ),
-          );
-          return;
-        } else {
-          //set the notification schneudele
-          tz.initializeTimeZones();
-          await _notifications.showNotification(
-              pill.name,
-              pill.amount + " " + pill.type + " " + pill.medicineForm,
-              provider.time,
-              pill.notifyId,
-              flutterLocalNotificationsPlugin);
-          provider.setDate =
-              provider.setDate.add(Duration(milliseconds: 604800000));
-          pill.time = provider.setDate.millisecondsSinceEpoch;
-          pill.notifyId = Random().nextInt(10000000);
-        }
-      }
-      //---------------------------------------------------------------------------------------
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Saved"),
-      ));
-      Navigator.pop(context);
-    }
   }
 }

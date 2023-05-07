@@ -1,15 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medimate/model/database/repository.dart';
+import 'package:medimate/model/pill.dart';
 import 'package:medimate/model/medicine_type.dart';
+import 'package:medimate/model/services/notifications/notifications.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class MedicineProvider extends ChangeNotifier {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController amountController = TextEditingController();
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final Notifications _notifications = Notifications();
+  Future initNotifies() async =>
+      flutterLocalNotificationsPlugin = await _notifications.initNotif();
+
+  final Repository _repository = Repository();
+
+  int howManyWeeks = 1;
   DateTime setDate = DateTime.now();
 
   final List<String> weightValues = ["pills", "ml", "mg"];
   String selectWeight;
 
-  MedicineProvider() {
+  void init() {
+    initNotifies();
     selectWeight = weightValues[0];
   }
 
@@ -72,6 +91,72 @@ class MedicineProvider extends ChangeNotifier {
 
   void setSelectedWeight(String value) {
     selectWeight = value;
+    notifyListeners();
+  }
+
+  Future savePill(BuildContext context) async {
+    //check if medicine time is lower than actual time
+    if (setDate.millisecondsSinceEpoch <=
+        DateTime.now().millisecondsSinceEpoch) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Check your medicine time and date"),
+        ),
+      );
+    }
+    if (amountController.text.isEmpty || nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Form Field can't be empty"),
+        ),
+      );
+      return;
+    } else {
+      //create pill object
+      Pill pill = Pill(
+          amount: amountController.text,
+          medicineForm: medicineTypes[medicineTypes
+                  .indexWhere((element) => element.isChoose == true)]
+              .name,
+          name: nameController.text,
+          time: setDate.millisecondsSinceEpoch,
+          type: selectWeight,
+          notifyId: Random().nextInt(10000000));
+
+      //---------------------| Save as many medicines as many user checks |----------------------
+      for (int i = 0; i < howManyWeeks; i++) {
+        dynamic result = await _repository.insertData(pill.pillToMap());
+        if (result == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Something went wrong"),
+            ),
+          );
+          return;
+        } else {
+          //set the notification schneudele
+          tz.initializeTimeZones();
+          await _notifications.showNotification(
+              pill.name,
+              pill.amount + " " + pill.type + " " + pill.medicineForm,
+              time,
+              pill.notifyId,
+              flutterLocalNotificationsPlugin);
+          setDate = setDate.add(Duration(milliseconds: 604800000));
+          pill.time = setDate.millisecondsSinceEpoch;
+          pill.notifyId = Random().nextInt(10000000);
+        }
+      }
+      //---------------------------------------------------------------------------------------
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Saved"),
+        ),
+      );
+      Navigator.pop(context);
+    }
+    nameController.clear();
+    amountController.clear();
     notifyListeners();
   }
 }
