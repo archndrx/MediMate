@@ -8,14 +8,15 @@ class Pill {
   int time;
   int notifyId;
 
-  Pill(
-      {this.id,
-      this.time,
-      this.amount,
-      this.medicineForm,
-      this.name,
-      this.type,
-      this.notifyId});
+  Pill({
+    this.id,
+    this.time,
+    this.amount,
+    this.medicineForm,
+    this.name,
+    this.type,
+    this.notifyId,
+  });
 
   //------------------set pill to map-------------------
 
@@ -36,13 +37,14 @@ class Pill {
   //---------------------create pill object from map---------------------
   Pill pillMapToObject(Map<String, dynamic> pillMap) {
     return Pill(
-        id: pillMap['id'],
-        name: pillMap['name'],
-        amount: pillMap['amount'],
-        type: pillMap['type'],
-        medicineForm: pillMap['medicineForm'],
-        time: pillMap['time'],
-        notifyId: pillMap['notifyId']);
+      id: pillMap['id'],
+      name: pillMap['name'],
+      amount: pillMap['amount'],
+      type: pillMap['type'],
+      medicineForm: pillMap['medicineForm'],
+      time: pillMap['time'],
+      notifyId: pillMap['notifyId'],
+    );
   }
 //=====================================================================
 

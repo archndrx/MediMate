@@ -53,13 +53,14 @@ class FormFields extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         fontSize: 16.0),
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 20.0),
-                        labelText: "Pills Amount",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide:
-                                BorderSide(width: 0.5, color: Colors.grey))),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 20.0),
+                      labelText: "Pills Amount",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                      ),
+                    ),
                   ),
                 ),
               ),
