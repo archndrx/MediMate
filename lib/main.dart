@@ -3,6 +3,7 @@ import 'package:medimate/view/screen/add_new_medicine/add_new_medicine.dart';
 import 'package:medimate/view/screen/home/homepage.dart';
 import 'package:medimate/view/screen/welcome_page.dart';
 import 'package:medimate/viewmodel/provider/homepage_provider.dart';
+import 'package:medimate/viewmodel/provider/medicine_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,6 +17,9 @@ class MainApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => HomePageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MedicineProvider(),
         ),
       ],
       child: MaterialApp(
