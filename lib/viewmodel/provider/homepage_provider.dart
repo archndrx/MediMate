@@ -52,14 +52,12 @@ class HomePageProvider extends ChangeNotifier {
     dayChoosed.isChecked = true;
     dailyPills.clear();
     allListOfPills.forEach((pill) {
-      DateTime pillDate =
-          DateTime.fromMicrosecondsSinceEpoch(pill.time * (1000));
+      DateTime pillDate = DateTime.fromMillisecondsSinceEpoch(pill.time);
       if (dayChoosed.dayNumber == pillDate.day &&
           dayChoosed.month == pillDate.month &&
           dayChoosed.year == pillDate.year) {
         dailyPills.add(pill);
       }
-      print(pill.time);
     });
     dailyPills.sort((pill1, pill2) => pill1.time.compareTo(pill2.time));
     notifyListeners();

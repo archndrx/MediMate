@@ -114,6 +114,7 @@ class MedicineProvider extends ChangeNotifier {
           content: Text("Check your medicine time and date"),
         ),
       );
+      return;
     }
     if (amountController.text.isEmpty || nameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
