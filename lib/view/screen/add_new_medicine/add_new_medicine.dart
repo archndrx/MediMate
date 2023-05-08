@@ -39,6 +39,8 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                   child: InkWell(
                     child: Icon(Icons.arrow_back),
                     onTap: () {
+                      provider.amountController.clear();
+                      provider.nameController.clear();
                       Navigator.pop(context);
                     },
                   ),
