@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class PlatfromTextButton extends StatelessWidget {
+class PlatformElevatedButton extends StatelessWidget {
   final VoidCallback handler;
   final Widget buttonChild;
   final Color color;
 
-  PlatfromTextButton({this.buttonChild, this.color, this.handler});
+  PlatformElevatedButton({this.buttonChild, this.color, this.handler});
 
   @override
   Widget build(BuildContext context) {

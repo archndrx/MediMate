@@ -23,31 +23,32 @@ class MedicineProvider extends ChangeNotifier {
   // pill objects
   int dayNow = 1;
   DateTime setDate = DateTime.now();
-  String selectWeight;
+  String selectType;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
 
-  //medicineType weight
-  final List<String> weightValues = ["pills", "ml", "mg"];
+  //medicineType
+  final List<String> medType = ["pills", "ml", "mg"];
 
   void init() {
     initNotifies();
-    selectWeight = weightValues[0];
+    selectType = medType[0];
   }
 
   // list medicine object
-  final List<MedicineType> _medicineTypes = [
+  final List<MedicineType> _medicineForms = [
     MedicineType("Syrup", Image.asset("assets/images/syrup.png"), true),
     MedicineType("Pill", Image.asset("assets/images/pills.png"), false),
     MedicineType("Capsule", Image.asset("assets/images/capsule.png"), false),
   ];
 
-  // getter
-  List<MedicineType> get medicineTypes => _medicineTypes;
+  void setSelectedType(String value) {
+    selectType = value;
+    notifyListeners();
+  }
 
-  int get time =>
-      setDate.millisecondsSinceEpoch -
-      tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
+  // getter
+  List<MedicineType> get medicineForms => _medicineForms;
 
 //------------------------OPEN TIME PICKER----------------------------
   Future<void> openTimePicker(BuildContext context) async {
@@ -93,17 +94,16 @@ class MedicineProvider extends ChangeNotifier {
 
 //----------------------------CLICK ON MEDICINE FORM CONTAINER----------------------------------------
   void medicineTypeClick(MedicineType medicine) {
-    medicineTypes.forEach((medicineType) => medicineType.isChoose = false);
-    medicineTypes[medicineTypes.indexOf(medicine)].isChoose = true;
+    medicineForms.forEach((medicineType) => medicineType.isChoose = false);
+    medicineForms[medicineForms.indexOf(medicine)].isChoose = true;
     notifyListeners();
   }
 
 //--------------------------------------SET WEIGHT---------------------------------------
-  void setSelectedWeight(String value) {
-    selectWeight = value;
-    notifyListeners();
-  }
 
+  int get time =>
+      setDate.millisecondsSinceEpoch -
+      tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
 //--------------------------------------SAVE PILL IN DB---------------------------------------
   Future savePill(BuildContext context) async {
     //check if medicine time is lower than actual time
@@ -127,12 +127,12 @@ class MedicineProvider extends ChangeNotifier {
       //create pill object
       Pill pill = Pill(
           amount: amountController.text,
-          medicineForm: medicineTypes[medicineTypes
+          medicineForm: medicineForms[medicineForms
                   .indexWhere((element) => element.isChoose == true)]
               .name,
           name: nameController.text,
           time: setDate.millisecondsSinceEpoch,
-          type: selectWeight,
+          type: selectType,
           notifyId: Random().nextInt(10000000));
 
       //---------------------| Save as many medicines as many user checks |----------------------

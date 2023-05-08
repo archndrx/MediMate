@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:medimate/helpers/platform_text_button.dart';
+import 'package:medimate/helpers/platform_elevated_button.dart';
 import 'package:medimate/view/screen/add_new_medicine/form_fields.dart';
 import 'package:medimate/view/screen/add_new_medicine/medicine_type_card.dart';
 import 'package:medimate/viewmodel/provider/medicine_provider.dart';
@@ -71,8 +71,8 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: FormFields(
-                        medicProvider.selectWeight,
-                        (value) => medicProvider.setSelectedWeight(value),
+                        medicProvider.selectType,
+                        (value) => medicProvider.setSelectedType(value),
                         medicProvider.nameController,
                         medicProvider.amountController),
                   ),
@@ -101,7 +101,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    ...provider.medicineTypes
+                    ...provider.medicineForms
                         .map((type) => MedicineTypeCard(type))
                   ],
                 ),
@@ -118,7 +118,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                     Expanded(
                       child: Container(
                         height: double.infinity,
-                        child: PlatfromTextButton(
+                        child: PlatformElevatedButton(
                           handler: () => provider.openTimePicker(context),
                           buttonChild: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -148,7 +148,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
                     Expanded(
                       child: Container(
                         height: double.infinity,
-                        child: PlatfromTextButton(
+                        child: PlatformElevatedButton(
                           handler: () => provider.openDatePicker(context),
                           buttonChild: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +179,7 @@ class _AddNewMedicineState extends State<AddNewMedicine> {
               Container(
                 height: deviceHeight * 0.09,
                 width: double.infinity,
-                child: PlatfromTextButton(
+                child: PlatformElevatedButton(
                   handler: () async =>
                       Provider.of<MedicineProvider>(context, listen: false)
                           .savePill(context),

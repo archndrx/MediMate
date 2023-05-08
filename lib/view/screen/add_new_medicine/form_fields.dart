@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class FormFields extends StatelessWidget {
   final List<String> weightValues = ["pills", "ml", "mg"];
-  final String selectWeight;
+  final String selectType;
   final Function onPopUpMenuChanged;
   final TextEditingController nameController;
   final TextEditingController amountController;
-  FormFields(this.selectWeight, this.onPopUpMenuChanged, this.nameController,
+  FormFields(this.selectType, this.onPopUpMenuChanged, this.nameController,
       this.amountController);
 
   @override
@@ -86,7 +86,7 @@ class FormFields extends StatelessWidget {
                             ))
                         .toList(),
                     onChanged: (value) => this.onPopUpMenuChanged(value),
-                    value: selectWeight,
+                    value: selectType,
                   ),
                 ),
               )

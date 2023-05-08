@@ -58,7 +58,7 @@ class Pill {
         return "assets/images/capsule.png";
         break;
       default:
-        return "assets/images/pills.png";
+        return '';
         break;
     }
   }

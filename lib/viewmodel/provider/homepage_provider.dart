@@ -41,7 +41,6 @@ class HomePageProvider extends ChangeNotifier {
         );
       },
     );
-    chooseDay(_daysList[_lastChooseDay]);
   }
 
   //-------------------------| Click on calendar day |-------------------------
