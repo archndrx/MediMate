@@ -99,11 +99,10 @@ class MedicineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//--------------------------------------SET WEIGHT---------------------------------------
-
   int get time =>
       setDate.millisecondsSinceEpoch -
       tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
+
 //--------------------------------------SAVE PILL IN DB---------------------------------------
   Future savePill(BuildContext context) async {
     //check if medicine time is lower than actual time
