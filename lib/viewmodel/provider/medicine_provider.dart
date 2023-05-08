@@ -44,6 +44,7 @@ class MedicineProvider extends ChangeNotifier {
 
   // getter
   List<MedicineType> get medicineTypes => _medicineTypes;
+
   int get time =>
       setDate.millisecondsSinceEpoch -
       tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
@@ -152,9 +153,7 @@ class MedicineProvider extends ChangeNotifier {
               time,
               pill.notifyId,
               flutterLocalNotificationsPlugin);
-          setDate = setDate.add(Duration(milliseconds: 604800000));
-          pill.time = setDate.millisecondsSinceEpoch;
-          pill.notifyId = Random().nextInt(10000000);
+          ;
         }
       }
       //---------------------------------------------------------------------------------------

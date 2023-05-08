@@ -48,17 +48,18 @@ class HomePageProvider extends ChangeNotifier {
   void chooseDay(CalendarDayModel clickedDay) {
     _lastChooseDay = _daysList.indexOf(clickedDay);
     _daysList.forEach((day) => day.isChecked = false);
-    CalendarDayModel chooseDay = _daysList[_daysList.indexOf(clickedDay)];
-    chooseDay.isChecked = true;
+    CalendarDayModel dayChoosed = _daysList[_lastChooseDay];
+    dayChoosed.isChecked = true;
     dailyPills.clear();
     allListOfPills.forEach((pill) {
       DateTime pillDate =
           DateTime.fromMicrosecondsSinceEpoch(pill.time * (1000));
-      if (chooseDay.dayNumber == pillDate.day &&
-          chooseDay.month == pillDate.month &&
-          chooseDay.year == pillDate.year) {
+      if (dayChoosed.dayNumber == pillDate.day &&
+          dayChoosed.month == pillDate.month &&
+          dayChoosed.year == pillDate.year) {
         dailyPills.add(pill);
       }
+      print(pill.time);
     });
     dailyPills.sort((pill1, pill2) => pill1.time.compareTo(pill2.time));
     notifyListeners();
